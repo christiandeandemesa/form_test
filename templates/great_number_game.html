@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Number Game</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/great_number_game.css') }}">
+</head>
+<body>
+    <div class=flexbox>
+        <h1>Welcome to the Great Number Game!!!</h1>
+        <p>I am thinking of a number between 1 and 100</p>
+        <p>Number of guesses: {{ num }}</p>
+        {% if 'guess' in session: %}
+            {% if session['guess'] > session['num'] %}
+            <div>
+                <h2 class=red_box>Too High!!!</h2>
+            </div>
+            {% elif session['guess'] < session['num'] %}
+            <div>
+                <h2 class=red_box>Too Low!!!</h2>
+            </div>
+            {% else %}
+            <div>
+                <h2>{{ session['num'] }} was the number!</h2>
+                <form action='/reset' method='post'>
+                    <input type='submit' value='Play Again!'>
+                </form>
+            </div>
+            {% endif %}
+        {% endif %}
+        {% if session['guess'] != session['num'] %}
+        <form class=bottom action='/guess' method='post'>
+            <div>
+                <label for='guess'>Take a guess!!!</label>
+            </div>
+            <div>
+                <input type='text' name='guess'>
+            </div>
+            <div>
+                <input class='button' type='submit' value='Guess'>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>
